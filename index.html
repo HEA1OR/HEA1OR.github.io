@@ -1,5 +1,900 @@
----
-layout: home
-# articles:
-#   excerpt_type: html
----
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Jamyoung Xu's academic homepage: embodied AI, agents, reasoning, and manipulation planning.">
+  <title>Jamyoung Xu | Academic Homepage</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #1f2933;
+      --muted: #667085;
+      --line: #d7dde5;
+      --paper: #fbfcfd;
+      --soft: #f3f6f8;
+      --accent: #0f766e;
+      --accent-strong: #134e4a;
+      --warm: #a16207;
+      --rose: #be123c;
+      --shadow: 0 18px 50px rgba(31, 41, 51, 0.10);
+      --radius: 8px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      color: var(--ink);
+      background:
+        linear-gradient(90deg, rgba(15, 118, 110, 0.07) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(15, 118, 110, 0.05) 1px, transparent 1px),
+        var(--paper);
+      background-size: 36px 36px;
+      letter-spacing: 0;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    a:hover {
+      color: var(--accent);
+    }
+
+    .site-shell {
+      width: min(1240px, calc(100% - 48px));
+      margin: 0 auto;
+    }
+
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      border-bottom: 1px solid rgba(215, 221, 229, 0.86);
+      background: rgba(251, 252, 253, 0.88);
+      backdrop-filter: blur(18px);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 64px;
+      gap: 20px;
+    }
+
+    .mark {
+      display: inline-grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      border: 1px solid var(--ink);
+      border-radius: 50%;
+      font-weight: 750;
+      font-size: 13px;
+      background: #fff;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .hero {
+      min-height: calc(100vh - 64px);
+      display: grid;
+      grid-template-columns: minmax(320px, 0.9fr) minmax(420px, 1.1fr);
+      align-items: center;
+      gap: clamp(32px, 6vw, 82px);
+      padding: clamp(42px, 7vw, 84px) 0;
+    }
+
+    .portrait-wrap {
+      position: relative;
+      aspect-ratio: 4 / 5;
+      border-radius: var(--radius);
+      overflow: visible;
+      background: transparent;
+      box-shadow: var(--shadow);
+      border: 0;
+    }
+
+    .portrait-wrap::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      border-radius: var(--radius);
+      background: #e6eef1;
+      border: 1px solid #d8e1e6;
+      pointer-events: none;
+    }
+
+    .portrait-photo {
+      position: relative;
+      z-index: 3;
+      width: 100%;
+      height: 100%;
+      display: block;
+      border-radius: var(--radius);
+      object-fit: cover;
+      transform: translate(var(--portrait-x, 0px), var(--portrait-y, 0px));
+      transition: none;
+      will-change: transform;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--accent-strong);
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 34px;
+      height: 1px;
+      background: var(--accent);
+    }
+
+    h1 {
+      margin: 20px 0 10px;
+      font-size: clamp(42px, 7.2vw, 88px);
+      line-height: 0.95;
+      letter-spacing: 0;
+    }
+
+    .name-cn {
+      display: block;
+      margin-top: 14px;
+      font-size: clamp(24px, 3vw, 36px);
+      font-weight: 560;
+      color: var(--accent-strong);
+    }
+
+    .lead {
+      margin: 28px 0 0;
+      max-width: 680px;
+      color: #344054;
+      font-size: clamp(17px, 1.7vw, 20px);
+      line-height: 1.85;
+    }
+
+    .lead-en {
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.8;
+    }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+      margin-top: 26px;
+    }
+
+    .tag {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 7px 12px;
+      background: rgba(255, 255, 255, 0.72);
+      color: #475467;
+      font-size: 13px;
+      white-space: nowrap;
+    }
+
+    .socials {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 34px;
+    }
+
+    .social-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 40px;
+      padding: 0 14px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+      color: #344054;
+      font-size: 14px;
+      box-shadow: 0 6px 20px rgba(31, 41, 51, 0.04);
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    button.social-link {
+      appearance: none;
+    }
+
+    .social-link svg {
+      width: 17px;
+      height: 17px;
+      stroke-width: 1.9;
+    }
+
+    .section {
+      padding: 34px 0 84px;
+    }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: end;
+      gap: 24px;
+      padding-top: 42px;
+      border-top: 1px solid var(--line);
+    }
+
+    .section-kicker {
+      margin: 0 0 8px;
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 760;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: clamp(28px, 4vw, 48px);
+      line-height: 1.08;
+      letter-spacing: 0;
+    }
+
+    .scholar-note {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.7;
+      text-align: right;
+    }
+
+    .publication-list {
+      display: grid;
+      gap: 22px;
+      margin-top: 34px;
+    }
+
+    .publication {
+      display: grid;
+      grid-template-columns: minmax(220px, 340px) 1fr;
+      gap: 26px;
+      padding: 20px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.82);
+      box-shadow: 0 14px 34px rgba(31, 41, 51, 0.06);
+    }
+
+    .teaser {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 236px;
+      border: 1px solid #cfd8e3;
+      border-radius: 6px;
+      overflow: hidden;
+      background: #fff;
+    }
+
+    .teaser img {
+      width: 100%;
+      height: auto;
+      max-height: 236px;
+      display: block;
+      object-fit: contain;
+      --pan-x: 0%;
+      --pan-y: 0%;
+      transform: translate(var(--pan-x), var(--pan-y)) scale(1);
+      transform-origin: center;
+      transition: transform 180ms ease-out;
+      will-change: transform;
+    }
+
+    .teaser:hover img {
+      transform: translate(var(--pan-x), var(--pan-y)) scale(1.6);
+    }
+
+    .teaser-fallback {
+      display: grid;
+      min-height: 236px;
+      place-items: center;
+      padding: 24px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .teaser-plain {
+      display: grid;
+      min-height: 184px;
+      align-content: center;
+      gap: 14px;
+      padding: 24px;
+      background:
+        linear-gradient(90deg, rgba(15, 118, 110, 0.18) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(15, 118, 110, 0.14) 1px, transparent 1px),
+        #f7faf9;
+      background-size: 22px 22px;
+    }
+
+    .teaser-plain strong {
+      color: var(--accent-strong);
+      font-size: 18px;
+      line-height: 1.35;
+    }
+
+    .teaser-plain span {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .pub-main {
+      min-width: 0;
+      padding: 4px 0;
+    }
+
+    .pub-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      min-height: 25px;
+      padding: 0 9px;
+      border-radius: 999px;
+      background: #eef6f4;
+      color: var(--accent-strong);
+      font-size: 12px;
+      font-weight: 760;
+    }
+
+    .badge.warm {
+      background: #fff7ed;
+      color: var(--warm);
+    }
+
+    .badge.rose {
+      background: #fff1f2;
+      color: var(--rose);
+    }
+
+    .citation-count {
+      display: inline-flex;
+      align-items: center;
+      min-height: 25px;
+      color: #111827;
+      font-size: 13px;
+    }
+
+    .pub-title {
+      margin: 0;
+      font-size: clamp(20px, 2vw, 28px);
+      line-height: 1.22;
+      letter-spacing: 0;
+    }
+
+    .authors,
+    .venue,
+    .abstract {
+      margin: 12px 0 0;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.72;
+    }
+
+    .authors strong {
+      color: var(--ink);
+      font-weight: 800;
+    }
+
+    .venue {
+      color: #344054;
+      font-weight: 620;
+    }
+
+    .pub-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .pub-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      height: 34px;
+      padding: 0 11px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+      color: #344054;
+      font-size: 13px;
+      font-weight: 640;
+    }
+
+    .pub-link svg {
+      width: 15px;
+      height: 15px;
+    }
+
+    footer {
+      border-top: 1px solid var(--line);
+      padding: 28px 0 36px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    .contact-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 50;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      background: rgba(17, 24, 39, 0.42);
+    }
+
+    .contact-modal[hidden] {
+      display: none;
+    }
+
+    .modal-panel {
+      width: min(420px, 100%);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+      box-shadow: var(--shadow);
+    }
+
+    .modal-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 16px 18px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .modal-title {
+      margin: 0;
+      font-size: 18px;
+    }
+
+    .modal-close {
+      width: 34px;
+      height: 34px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+      color: var(--muted);
+      cursor: pointer;
+      font-size: 20px;
+      line-height: 1;
+    }
+
+    .modal-body {
+      display: grid;
+      gap: 10px;
+      padding: 18px;
+      color: #344054;
+      font-size: 15px;
+      line-height: 1.7;
+    }
+
+    .contact-value {
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: var(--soft);
+      font-weight: 650;
+      word-break: break-all;
+    }
+
+    @media (max-width: 860px) {
+      .site-shell {
+        width: min(100% - 28px, 680px);
+      }
+
+      .nav-links {
+        gap: 12px;
+      }
+
+      .hero,
+      .publication,
+      .section-head {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        padding-top: 28px;
+      }
+
+      .portrait-wrap {
+        max-width: 430px;
+        width: 100%;
+        margin: 0 auto;
+      }
+
+      .scholar-note {
+        text-align: left;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .nav-inner {
+        min-height: 58px;
+      }
+
+      .nav-links a:nth-child(3) {
+        display: none;
+      }
+
+      .hero {
+        min-height: auto;
+      }
+
+      h1 {
+        font-size: 42px;
+      }
+
+      .publication {
+        padding: 14px;
+      }
+
+      .teaser,
+      .teaser-fallback {
+        min-height: 210px;
+      }
+
+      .teaser img {
+        max-height: 210px;
+      }
+
+      .social-link {
+        flex: 1 1 calc(50% - 10px);
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav" aria-label="Primary navigation">
+    <div class="site-shell nav-inner">
+      <a class="mark" href="#top" aria-label="Jamyoung Xu home">JX</a>
+      <div class="nav-links">
+        <a href="#profile">Profile</a>
+        <a href="#publications">Publications</a>
+        <a href="https://scholar.google.com/citations?user=0rCVWSkAAAAJ&hl=zh-CN&oi=sra">Scholar</a>
+      </div>
+    </div>
+  </nav>
+
+  <main id="top">
+    <section id="profile" class="site-shell hero">
+      <figure class="portrait-wrap">
+        <img class="portrait-photo" src="assets/2.jpg" alt="Portrait of Jamyoung Xu">
+      </figure>
+
+      <div>
+        <div class="eyebrow">Academic Homepage</div>
+        <h1>Jamyoung Xu <span class="name-cn">徐文江</span></h1>
+        <p class="lead">
+          我目前博士就读于中国科学院自动化研究所（CASIA）（2024-），本科毕业于南京大学自动化系（2020-2024）。我的研究兴趣集中在具身智能、智能体、复杂推理与机器人操作规划。我关心机器人在动态环境下的落地问题，包括如何让机器人在真实世界中有效思考并行动，如何保证机器人交互时人以及环境的安全，如何赋予机器人持续学习的能力等等。欢迎有相同兴趣的研究者联系我合作，我也在积极寻求工业界的实习机会。
+        </p>
+        <p class="lead-en">
+          I am currently a Ph.D. student at the Institute of Automation, Chinese Academy of Sciences (CASIA, 2024-), and received my B.Eng. from the Department of Automation at Nanjing University (2020-2024). My research interests include embodied AI, agents, complex reasoning, and robotic manipulation planning. I care about deploying robots in dynamic environments, including how robots can reason and act effectively in the real world, how to ensure the safety of humans and surrounding environments during interaction, and how to endow robots with continual learning abilities. I welcome collaborations with researchers who share similar interests, and I am actively seeking internship opportunities in industry.
+        </p>
+        <div class="tag-row" aria-label="Research interests">
+          <span class="tag">Embodied AI</span>
+          <span class="tag">Agent</span>
+          <span class="tag">Large Language Models</span>
+          <span class="tag">Robotics Planning</span>
+        </div>
+        <div class="socials" aria-label="Social links">
+          <a class="social-link" href="https://scholar.google.com/citations?user=0rCVWSkAAAAJ&hl=zh-CN&oi=sra" aria-label="Google Scholar">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path d="M4 10.5 12 5l8 5.5-8 5.5-8-5.5Z"/><path d="M6 12.5v4.2c1.5 1.4 3.5 2.1 6 2.1s4.5-.7 6-2.1v-4.2"/></svg>
+            Scholar
+          </a>
+          <a class="social-link" href="https://github.com/HEA1OR" aria-label="GitHub">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path d="M9 19c-4 1.3-4-2-5.5-2.5"/><path d="M15 22v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6A4.6 4.6 0 0 0 18.7 7 4.2 4.2 0 0 0 18.6 4S17.5 3.7 15 5.3a12.3 12.3 0 0 0-6 0C6.5 3.7 5.4 4 5.4 4a4.2 4.2 0 0 0-.1 3A4.6 4.6 0 0 0 4 10c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V22"/></svg>
+            GitHub
+          </a>
+          <button class="social-link" type="button" data-modal-target="email-modal" aria-label="Email">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path d="M4 6h16v12H4z"/><path d="m4 7 8 6 8-6"/></svg>
+            Email
+          </button>
+          <a class="social-link" href="https://www.zhihu.com/people/xwj-84-91" aria-label="Zhihu">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path d="M5 5h8"/><path d="M9 5v14"/><path d="M4 12h10"/><path d="M6 19l6-14"/><path d="M16 6h4v12h-4z"/><path d="M20 18l1 2"/></svg>
+            Zhihu
+          </a>
+          <button class="social-link" type="button" data-modal-target="wechat-modal" aria-label="WeChat">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path d="M8.5 16.5c-3.1 0-5.5-1.9-5.5-4.3s2.4-4.3 5.5-4.3 5.5 1.9 5.5 4.3-2.4 4.3-5.5 4.3Z"/><path d="M12.3 10.2c.9-.7 2.1-1.1 3.4-1.1 2.9 0 5.3 1.8 5.3 4.1s-2.4 4.1-5.3 4.1c-.6 0-1.2-.1-1.7-.2L11 19l.9-2.5"/><path d="M6.7 11.7h.1"/><path d="M10.1 11.7h.1"/><path d="M14.2 13h.1"/><path d="M17.3 13h.1"/></svg>
+            微信
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section id="publications" class="site-shell section">
+      <div class="section-head">
+        <div>
+          <p class="section-kicker">Selected Work</p>
+          <h2>Publications</h2>
+        </div>
+        <p class="scholar-note">
+          <strong>Google Scholar: 151 citations</strong><br>
+          2026/8/19
+        </p>
+      </div>
+
+      <div class="publication-list">
+        <article class="publication">
+          <div class="teaser" aria-label="Embodied Tree of Thoughts teaser image">
+            <img src="teaser_01.png" alt="Embodied Tree of Thoughts teaser">
+          </div>
+          <div class="pub-main">
+            <div class="pub-meta">
+              <span class="badge">Featured</span>
+              <span class="badge warm">RA-L 2026</span>
+              <span class="badge">First Author</span>
+              <span class="citation-count"><strong>5 citations</strong></span>
+            </div>
+            <h3 class="pub-title">
+              <a href="https://scholar.google.com/citations?view_op=view_citation&hl=zh-CN&user=0rCVWSkAAAAJ&citation_for_view=0rCVWSkAAAAJ:9yKSN-GCB0IC">Embodied tree of thoughts: Deliberate manipulation planning with embodied world model</a>
+            </h3>
+            <p class="authors"><strong>W Xu</strong>, M Zhang, C Wang, R Fang, L Li, J Xu, J Gu, Z Zeng, R Chen</p>
+            <p class="venue">IEEE Robotics and Automation Letters, 2026</p>
+            <p class="abstract">
+              This paper brings tree-structured deliberation into embodied manipulation planning. It couples reasoning over candidate action branches with an embodied world model, enabling the agent to evaluate physical consequences before committing to long-horizon manipulation steps.
+            </p>
+            <div class="pub-links">
+              <a class="pub-link" href="https://embodied-tree-of-thoughts.github.io/">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path d="M4 5h16v14H4z"/><path d="M8 9h8"/><path d="M8 13h5"/><path d="M8 17h8"/></svg>
+                Project
+              </a>
+              <a class="pub-link" href="teaser_01.png">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path d="M4 5h16v14H4z"/><path d="m4 15 4-4 4 4 2-2 6 6"/><path d="M15 9h.1"/></svg>
+                Figure
+              </a>
+              <a class="pub-link" href="https://scholar.google.com/citations?view_op=view_citation&hl=zh-CN&user=0rCVWSkAAAAJ&citation_for_view=0rCVWSkAAAAJ:9yKSN-GCB0IC">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.1 0l2-2a5 5 0 0 0-7.1-7.1l-1.2 1.2"/><path d="M14 11a5 5 0 0 0-7.1 0l-2 2a5 5 0 0 0 7.1 7.1l1.2-1.2"/></svg>
+                Scholar
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <article class="publication">
+          <div class="teaser" aria-label="Logic-of-Thought teaser image">
+            <img src="LoT1_01.png" alt="Logic-of-Thought teaser">
+          </div>
+          <div class="pub-main">
+            <div class="pub-meta">
+              <span class="badge">Featured</span>
+              <span class="badge warm">NAACL 2025</span>
+              <span class="badge rose">CCF B</span>
+              <span class="citation-count"><strong>61 citations</strong></span>
+            </div>
+            <h3 class="pub-title">
+              <a href="https://scholar.google.com/citations?view_op=view_citation&hl=zh-CN&user=0rCVWSkAAAAJ&citation_for_view=0rCVWSkAAAAJ:u5HHmVD_uO8C">Logic-of-thought: Injecting logic into contexts for full reasoning in large language models</a>
+            </h3>
+            <p class="authors">T Liu, <strong>W Xu</strong>, W Huang, Y Zeng, J Wang, X Wang, H Yang, J Li</p>
+            <p class="venue">Proceedings of the 2025 Conference of the Nations of the Americas Chapter of the Association for Computational Linguistics</p>
+            <p class="abstract">
+              This work studies how logic-aware context injection can strengthen full-chain reasoning in large language models. By making implicit logical relations more explicit before generation, the method aims to improve consistency, completeness, and reliability on complex reasoning tasks.
+            </p>
+            <div class="pub-links">
+              <a class="pub-link" href="LoT1_01.png">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path d="M4 5h16v14H4z"/><path d="m4 15 4-4 4 4 2-2 6 6"/><path d="M15 9h.1"/></svg>
+                Figure
+              </a>
+              <a class="pub-link" href="https://scholar.google.com/citations?view_op=view_citation&hl=zh-CN&user=0rCVWSkAAAAJ&citation_for_view=0rCVWSkAAAAJ:u5HHmVD_uO8C">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.1 0l2-2a5 5 0 0 0-7.1-7.1l-1.2 1.2"/><path d="M14 11a5 5 0 0 0-7.1 0l-2 2a5 5 0 0 0 7.1 7.1l1.2-1.2"/></svg>
+                Scholar
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <article class="publication">
+          <div class="teaser teaser-plain">
+            <strong>GroupDebate</strong>
+            <span>Multi-agent debate with group discussion for more efficient coordination.</span>
+          </div>
+          <div class="pub-main">
+            <div class="pub-meta">
+              <span class="badge warm">AAMAS 2026</span>
+              <span class="badge">Preprint</span>
+              <span class="citation-count"><strong>82 citations</strong></span>
+            </div>
+            <h3 class="pub-title">
+              <a href="https://scholar.google.com/citations?view_op=view_citation&hl=zh-CN&user=0rCVWSkAAAAJ&citation_for_view=0rCVWSkAAAAJ:u-x6o8ySG0sC">Groupdebate: Enhancing the efficiency of multi-agent debate using group discussion</a>
+            </h3>
+            <p class="authors">T Liu, X Wang, W Huang, <strong>W Xu</strong>, Y Zeng, L Jiang, H Yang, J Li</p>
+            <p class="venue">Autonomous Agents and Multiagent Systems, 2026</p>
+            <p class="abstract">
+              GroupDebate improves multi-agent debate by organizing agents into discussion groups, reducing redundant exchanges while preserving the benefits of diverse viewpoints and collaborative refinement.
+            </p>
+            <div class="pub-links">
+              <a class="pub-link" href="https://scholar.google.com/citations?view_op=view_citation&hl=zh-CN&user=0rCVWSkAAAAJ&citation_for_view=0rCVWSkAAAAJ:u-x6o8ySG0sC">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.1 0l2-2a5 5 0 0 0-7.1-7.1l-1.2 1.2"/><path d="M14 11a5 5 0 0 0-7.1 0l-2 2a5 5 0 0 0 7.1 7.1l1.2-1.2"/></svg>
+                Scholar
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <article class="publication">
+          <div class="teaser teaser-plain">
+            <strong>Critic in the Loop</strong>
+            <span>A tri-system VLA framework for robust long-horizon manipulation.</span>
+          </div>
+          <div class="pub-main">
+            <div class="pub-meta">
+              <span class="badge warm">arXiv 2026</span>
+              <span class="badge">Preprint</span>
+              <span class="citation-count"><strong>3 citations</strong></span>
+            </div>
+            <h3 class="pub-title">
+              <a href="https://scholar.google.com/citations?view_op=view_citation&hl=zh-CN&user=0rCVWSkAAAAJ&citation_for_view=0rCVWSkAAAAJ:2osOgNQ5qMEC">Critic in the loop: A tri-system vla framework for robust long-horizon manipulation</a>
+            </h3>
+            <p class="authors">P Yi, Y Ma, <strong>W Xu</strong>, Y Hao, S Gan, W Li, S Zhong</p>
+            <p class="venue">arXiv preprint arXiv:2603.05185, 2026</p>
+            <p class="abstract">
+              This work investigates robust long-horizon manipulation through a tri-system vision-language-action framework, introducing a critic component that monitors and improves action execution across extended tasks.
+            </p>
+            <div class="pub-links">
+              <a class="pub-link" href="https://scholar.google.com/citations?view_op=view_citation&hl=zh-CN&user=0rCVWSkAAAAJ&citation_for_view=0rCVWSkAAAAJ:2osOgNQ5qMEC">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.1 0l2-2a5 5 0 0 0-7.1-7.1l-1.2 1.2"/><path d="M14 11a5 5 0 0 0-7.1 0l-2 2a5 5 0 0 0 7.1 7.1l1.2-1.2"/></svg>
+                Scholar
+              </a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <div class="contact-modal" id="email-modal" hidden>
+    <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="email-modal-title">
+      <div class="modal-head">
+        <h2 class="modal-title" id="email-modal-title">Email</h2>
+        <button class="modal-close" type="button" data-modal-close aria-label="Close">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="contact-value">2604317843@qq.com</div>
+        <div class="contact-value">2604317843xwj@gmail.com</div>
+        <div class="contact-value">xuwenjiang24@ia.ac.cn</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="contact-modal" id="wechat-modal" hidden>
+    <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="wechat-modal-title">
+      <div class="modal-head">
+        <h2 class="modal-title" id="wechat-modal-title">微信</h2>
+        <button class="modal-close" type="button" data-modal-close aria-label="Close">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="contact-value">xwj2604317843xwj</div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="site-shell">
+      Last updated in 2026. Built as a concise academic homepage for Jamyoung Xu.
+    </div>
+  </footer>
+  <script>
+    const modalTriggers = document.querySelectorAll("[data-modal-target]");
+    const modals = document.querySelectorAll(".contact-modal");
+    const zoomTeasers = document.querySelectorAll(".teaser:not(.teaser-plain)");
+    const portraitWrap = document.querySelector(".portrait-wrap");
+    const portraitPhoto = document.querySelector(".portrait-photo");
+
+    function closeModal(modal) {
+      modal.hidden = true;
+    }
+
+    modalTriggers.forEach((trigger) => {
+      trigger.addEventListener("click", () => {
+        const modal = document.getElementById(trigger.dataset.modalTarget);
+        if (modal) {
+          modal.hidden = false;
+          modal.querySelector("[data-modal-close]").focus();
+        }
+      });
+    });
+
+    modals.forEach((modal) => {
+      modal.addEventListener("click", (event) => {
+        if (event.target === modal || event.target.hasAttribute("data-modal-close")) {
+          closeModal(modal);
+        }
+      });
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        modals.forEach(closeModal);
+      }
+    });
+
+    if (portraitWrap && portraitPhoto) {
+      portraitWrap.addEventListener("mousemove", (event) => {
+        const rect = portraitWrap.getBoundingClientRect();
+        const x = (event.clientX - rect.left) / rect.width;
+        const y = (event.clientY - rect.top) / rect.height;
+        const offsetX = (x - 0.5) * 36;
+        const offsetY = (y - 0.5) * 44;
+
+        portraitPhoto.style.setProperty("--portrait-x", `${offsetX}px`);
+        portraitPhoto.style.setProperty("--portrait-y", `${offsetY}px`);
+      });
+
+      portraitWrap.addEventListener("mouseleave", () => {
+        portraitPhoto.style.setProperty("--portrait-x", "0px");
+        portraitPhoto.style.setProperty("--portrait-y", "0px");
+      });
+    }
+
+    zoomTeasers.forEach((teaser) => {
+      const image = teaser.querySelector("img");
+
+      teaser.addEventListener("mousemove", (event) => {
+        if (!image) {
+          return;
+        }
+
+        const rect = teaser.getBoundingClientRect();
+        const x = (event.clientX - rect.left) / rect.width;
+        const y = (event.clientY - rect.top) / rect.height;
+        const panX = (0.5 - x) * 96;
+        const panY = (0.5 - y) * 96;
+        image.style.setProperty("--pan-x", `${panX}%`);
+        image.style.setProperty("--pan-y", `${panY}%`);
+      });
+
+      teaser.addEventListener("mouseleave", () => {
+        if (!image) {
+          return;
+        }
+
+        image.style.setProperty("--pan-x", "0%");
+        image.style.setProperty("--pan-y", "0%");
+      });
+    });
+  </script>
+</body>
+</html>
